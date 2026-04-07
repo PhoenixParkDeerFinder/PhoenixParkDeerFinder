@@ -1,0 +1,43 @@
+.filter-bar {
+  position: absolute;
+  top: calc(var(--nav-height) + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4000;
+  display: flex;
+  gap: 6px;
+  padding: 6px 10px;
+  background: var(--color-surface);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-md);
+  overflow-x: auto;
+  max-width: calc(100vw - 32px);
+  scrollbar-width: none;
+}
+
+.filter-bar::-webkit-scrollbar { display: none; }
+
+.filter-chip {
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.filter-chip:hover {
+  background: var(--color-brand-light);
+  color: var(--color-brand-dark);
+  border-color: transparent;
+}
+
+.filter-chip-active {
+  background: var(--color-brand);
+  color: #ffffff;
+  border-color: transparent;
+}

@@ -1,10 +1,22 @@
-import MapView from './components/map/MapView'
-import './lib/mapConfig'   // runs the L.Icon.Default.mergeOptions side-effect
+import { useState } from "react";
+import MapView from "./components/map/MapView";
+import Navbar from "./components/layout/Navbar";
+import AnimalFilterBar from "./components/map/AnimalFilterBar";
+import "./App.css";
 
 export default function App() {
+  const [selectedAnimalId, setSelectedAnimalId] = useState<number | null>(null);
+
   return (
-    <div style={{ position: 'relative', height: '100vh' }}>
-      <MapView />
+    <div className="app">
+      <Navbar />
+      <div className="map-wrapper">
+        <AnimalFilterBar
+          selectedId={selectedAnimalId}
+          onChange={setSelectedAnimalId}
+        />
+        <MapView />
+      </div>
     </div>
-  )
+  );
 }

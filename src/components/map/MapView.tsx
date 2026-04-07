@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
 import { postgisPointToLatLng } from "../../lib/mapConfig";
-import { usePark } from "../../hooks/usePark";
-import { usePins } from "../../hooks/usePins";
 import SightingMarker from "./SightingMarker";
 import CreatePinModal from "../sightings/CreatePinModal";
 import type { LatLng } from "leaflet";
 import { Polygon } from "react-leaflet";
+import { usePark, usePins } from "../../hooks";
 
 function ClickHandler({
   onMapClick,
@@ -51,7 +50,7 @@ export default function MapView() {
         {park.bounds && (
           <Polygon
             positions={park.bounds.coordinates}
-            pathOptions={{ color: "#1D9E75", fillOpacity: 0.30, weight: 2 }}
+            pathOptions={{ color: "#1D9E75", fillOpacity: 0.3, weight: 2 }}
           />
         )}
       </MapContainer>
