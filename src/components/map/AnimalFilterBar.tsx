@@ -1,5 +1,5 @@
 import "./AnimalFilterBar.css";
-import { useAnimals } from "../../hooks/useAnimals";
+import { useAnimals } from "../../hooks/";
 import type { Animal } from "../../types";
 
 interface Props {

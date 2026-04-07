@@ -6,6 +6,7 @@ import CreatePinModal from "../sightings/CreatePinModal";
 import type { LatLng } from "leaflet";
 import { Polygon } from "react-leaflet";
 import { usePark, usePins } from "../../hooks";
+import "./MapView.css"
 
 function ClickHandler({
   onMapClick,
@@ -20,9 +21,9 @@ function ClickHandler({
   return null;
 }
 
-export default function MapView() {
+export default function MapView({selectedAnimalId} : {selectedAnimalId : number}) {
   const { park, loading: parkLoading } = usePark();
-  const { pins, loading: pinsLoading } = usePins(park?.id ?? null);
+  const { pins, loading: pinsLoading } = usePins(park?.id ?? null, selectedAnimalId);
   const [pendingLatLng, setPendingLatLng] = useState<LatLng | null>(null);
 
   if (parkLoading) return <div className="map-loading">Loading map...</div>;

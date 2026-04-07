@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabaseClient";
 import type { PinWithAnimal } from "../types";
 
-export function usePins(parkId: number | null) {
+export function usePins(parkId: number | null, selectedAnimalId: number | null = null) {
   const [pins, setPins] = useState<PinWithAnimal[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -10,14 +10,20 @@ export function usePins(parkId: number | null) {
     if (parkId === null) return;
 
     // Initial fetch
-    supabase
+    let query = supabase
       .from("pins")
       .select("*, animals(common_name, species, icon_url)")
       .eq("park_id", parkId)
-      .then(({ data, error }) => {
+
+    if (selectedAnimalId !== null) {
+      query = query.eq('animal_id', selectedAnimalId)
+    }
+
+    query.then(({ data, error }) => {
         if (!error && data) setPins(data as PinWithAnimal[]);
         setLoading(false);
       });
+
 
     // Realtime subscription — new pins appear live
     const channel = supabase

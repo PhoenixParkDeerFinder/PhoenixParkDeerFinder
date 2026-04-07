@@ -15,7 +15,7 @@ export default function App() {
           selectedId={selectedAnimalId}
           onChange={setSelectedAnimalId}
         />
-        <MapView />
+        <MapView selectedAnimalId={selectedAnimalId ?? 1}/>
       </div>
     </div>
   );

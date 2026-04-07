@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import "./PhotoUploader.css"
 
 interface Props {
   onFileSelected: (file: File | null) => void;
@@ -32,6 +33,7 @@ export default function PhotoUploader({ onFileSelected }: Props) {
       onDrop={handleDrop}
       onDragOver={(e) => e.preventDefault()}
       onClick={() => inputRef.current?.click()}
+      className="photo-uploader"
     >
       <input
         ref={inputRef}
@@ -42,12 +44,12 @@ export default function PhotoUploader({ onFileSelected }: Props) {
 
       {preview ? (
         <>
-          <img src={preview} alt="Preview" />
-          <button onClick={clear}>✕</button>
+          <img className="photo-uploader-preview" src={preview} alt="Preview" />
+          <button className="photo-uploader-clear" onClick={clear}>✕</button>
         </>
       ) : (
-        <div>
-          <div>+</div>
+        <div className="photo-uploader-empty">
+          <div className="photo-uploader-icon">+</div>
           Drag a photo here or click to browse
         </div>
       )}
