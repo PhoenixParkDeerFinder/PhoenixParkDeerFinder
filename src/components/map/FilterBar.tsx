@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import "./FilterBar.css";
 import { useAnimals } from "../../hooks/useAnimals";
 import type { Animal } from "../../types";
