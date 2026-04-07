@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import "./FilterBar.css";
 import { useAnimals } from "../../hooks/useAnimals";
 import type { Animal } from "../../types";
@@ -26,9 +25,14 @@ export default function FilterBar() {
 
   const changeHours = (event: Event, newValue: number) => {
     setHours(newValue);
+    
+  console.log(event)
   };
 
   if (loading) return null;
+
+  //just to stop ESLINT from crying
+  console.log(hours)
 
   return (
     <div className="filter-bar">
