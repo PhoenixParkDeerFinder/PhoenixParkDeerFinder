@@ -70,7 +70,7 @@ export default function CreatePinModal({ latlng, parkId, onClose }: Props) {
                 <div>Loading animals…</div>
               ) : (
                 <select
-                  className="modal-select"
+                  className="form-select"
                   value={animalId ?? ""}
                   onChange={(e) => setAnimalId(Number(e.target.value))}
                   required
@@ -87,14 +87,14 @@ export default function CreatePinModal({ latlng, parkId, onClose }: Props) {
                 </select>
               )}
 
-              <label className="modal-label">
-                Photo <span>(optional)</span>
+              <label className="form-label">
+                Photo <span className="form-label-options">(optional)</span>
               </label>
               <PhotoUploader onFileSelected={setPhotoFile} />
 
-              {errorMsg && <div className="modal-error">{errorMsg}</div>}
+              {errorMsg && <div className="form-error">{errorMsg}</div>}
 
-              <button className="modal-btnPrimary" type="submit">Submit sighting</button>
+              <button className="btn btn-primary" type="submit">Submit sighting</button>
             </form>
           </>
         )}
@@ -112,7 +112,7 @@ export default function CreatePinModal({ latlng, parkId, onClose }: Props) {
             <div className="modal-text">
               Your pin will appear on the map shortly.
             </div>
-            <button className="modal-btnSecondary" onClick={onClose}>Close</button>
+            <button className="btn btn-secondary" onClick={onClose}>Close</button>
           </div>
         )}
 
@@ -124,7 +124,7 @@ export default function CreatePinModal({ latlng, parkId, onClose }: Props) {
               You've reached the limit for anonymous submissions. Please try
               again later.
             </div>
-            <button className="modal-btnSecondary" onClick={onClose}>Close</button>
+            <button className="btn btn-secondary" onClick={onClose}>Close</button>
           </div>
         )}
       </div>

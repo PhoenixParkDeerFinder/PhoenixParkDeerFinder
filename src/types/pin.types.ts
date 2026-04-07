@@ -6,7 +6,7 @@ export interface Pin {
   location: GeoJSONPoint
   animal_id: number
   observed_at: string
-  photo_url: string | null
+  photo_name: string | null
   is_verified: boolean
   created_at: string
   user_id: string | null

@@ -16,9 +16,9 @@ export default function SightingPopup({ pin, onClose }: Props) {
   return (
     <Popup eventHandlers={{popupclose: onClose}} minWidth={200}>
       <div style={{ fontSize: 13, lineHeight: 1.5 }}>
-        {pin.photo_url && (
+        {pin.photo_name && (
           <img
-            src={getPhotoUrl(pin.photo_url)}
+            src={getPhotoUrl(pin.photo_name)}
             alt="Sighting photo"
             style={{ width: '100%', borderRadius: 6, marginBottom: 8, objectFit: 'cover', maxHeight: 140 }}
           />

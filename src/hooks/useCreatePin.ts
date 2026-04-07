@@ -83,7 +83,7 @@ export function useCreatePin() {
       location,
       animal_id: animalId,
       park_id: parkId,
-      photo_url: photoPath,
+      photo_name: photoPath,
       is_verified: false,
     });
 

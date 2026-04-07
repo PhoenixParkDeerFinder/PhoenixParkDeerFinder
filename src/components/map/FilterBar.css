@@ -5,8 +5,8 @@
   transform: translateX(-50%);
   z-index: 4000;
   display: flex;
-  gap: 6px;
-  padding: 6px 10px;
+  gap: 12px;
+  padding: 6px 16px;
   background: var(--color-surface);
   border-radius: var(--radius-pill);
   box-shadow: var(--shadow-md);
@@ -19,6 +19,7 @@
 
 .filter-chip {
   padding: 5px 14px;
+  margin: 0 5px;
   font-size: 12px;
   font-weight: 500;
   border-radius: var(--radius-pill);
@@ -40,4 +41,16 @@
   background: var(--color-brand);
   color: #ffffff;
   border-color: transparent;
+}
+
+.filter-animal {
+  display: flex;
+  align-items: center;
+}
+
+.filter-time {
+  margin: 6px;
+  margin-top: 12px;
+  margin-bottom: 0;
+  width: 200px
 }

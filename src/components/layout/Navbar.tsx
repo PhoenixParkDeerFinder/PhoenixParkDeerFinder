@@ -1,8 +1,8 @@
-import './Navbar.css'
-import { useAuth } from '../../hooks/useAuth'
+import "./Navbar.css";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function Navbar() {
-  const { user, signIn, signOut, loading } = useAuth()
+  const { user, signIn, signOut, loading } = useAuth();
 
   return (
     <nav className="navbar">
@@ -26,5 +26,5 @@ export default function Navbar() {
         )}
       </div>
     </nav>
-  )
+  );
 }
