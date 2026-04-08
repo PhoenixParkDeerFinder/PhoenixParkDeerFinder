@@ -9,37 +9,41 @@ interface Props {
 }
 
 export default function SightingPopup({ pin, onClose }: Props) {
-  const date = new Date(pin.observed_at).toLocaleDateString('en-NL', {
+  const date = new Date(pin.observed_at).toLocaleDateString('en-IE', {
     day: 'numeric', month: 'short', year: 'numeric',
   })
 
+  const contributor = pin.profiles?.username ?? 'anon'
+
   return (
     <Popup eventHandlers={{popupclose: onClose}} minWidth={200}>
-      <div style={{ fontSize: 13, lineHeight: 1.5 }}>
+       <div className="popup">
         {pin.photo_name && (
           <img
             src={getPhotoUrl(pin.photo_name)}
-            alt="Sighting photo"
-            style={{ width: '100%', borderRadius: 6, marginBottom: 8, objectFit: 'cover', maxHeight: 140 }}
+            alt="Sighting"
+            className="popup-photo"
           />
         )}
-        <div style={{ fontWeight: 600, marginBottom: 2 }}>
+
+        <div className="popup-animal">
           {pin.animals?.common_name ?? 'Unknown animal'}
         </div>
+
         {pin.animals?.species && (
-          <div style={{ fontStyle: 'italic', color: '#6b6a65', marginBottom: 4 }}>
-            {pin.animals.species}
-          </div>
+          <div className="popup-species">{pin.animals.species}</div>
         )}
-        <div style={{ color: '#6b6a65' }}>{date}</div>
+
+        <div className="popup-meta">
+          <span>{date}</span>
+          <span className="popup-dot">·</span>
+          <span className="popup-contributor">
+            {pin.profiles ? contributor : <em>anon</em>}
+          </span>
+        </div>
+
         {!pin.is_verified && (
-          <div style={{
-            marginTop: 8, padding: '3px 8px',
-            background: '#FAEEDA', color: '#633806',
-            borderRadius: 99, fontSize: 11, display: 'inline-block'
-          }}>
-            Pending verification
-          </div>
+          <span className="badge badge-pending popup-badge">Pending verification</span>
         )}
       </div>
     </Popup>

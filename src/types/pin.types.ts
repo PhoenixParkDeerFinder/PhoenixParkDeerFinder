@@ -15,4 +15,5 @@ export interface Pin {
 
 export interface PinWithAnimal extends Pin {
   animals: Pick<Animal, 'common_name' | 'species' | 'icon_url'>
+  profiles: { username: string } | null
 }
