@@ -4,7 +4,7 @@ import { useState } from "react";
 import SightingPopup from "./SightingPopup";
 import type { PinWithAnimal } from "../../types";
 
-function makeIcon(iconUrl: string | null, isVerified: boolean) {
+function makeIcon(iconUrl: string | null, isVerified: boolean, animalId: number) {
   return L.divIcon({
     className: "",
     html: `
@@ -21,7 +21,7 @@ function makeIcon(iconUrl: string | null, isVerified: boolean) {
         ${
           iconUrl
             ? `<img src="${iconUrl}" style="width:16px;height:16px;transform:rotate(45deg);border-radius:50%" />`
-            : `<span style="transform:rotate(45deg);font-size:14px">🦌</span>`
+            : `<span style="transform:rotate(45deg);font-size:14px">${chooseAnimalEmoji(animalId)}</span>`
         }
       </div>`,
     iconSize: [32, 32],
@@ -30,15 +30,29 @@ function makeIcon(iconUrl: string | null, isVerified: boolean) {
   });
 }
 
+function chooseAnimalEmoji(animalId: number) {
+  switch (animalId) {
+    case 1:
+      return "🦌"
+    case 2:
+      return "🦊"
+    case 3: 
+      return "🐰"
+    default:
+      return "IDK"
+  }
+    
+}
+
 export default function SightingMarker({ pin }: { pin: PinWithAnimal }) {
   const [open, setOpen] = useState(false);
-  const [lng, lat] = pin.location.coordinates; // already an object
+  const [lng, lat] = pin.location.coordinates; 
   const position: [number, number] = [lat, lng];
 
   return (
     <Marker
       position={position}
-      icon={makeIcon(pin.animals?.icon_url ?? null, pin.is_verified)}
+      icon={makeIcon(pin.animals?.icon_url ?? null, pin.is_verified, pin.animal_id)}
       eventHandlers={{ click: () => setOpen(true) }}
     >
       {open && <SightingPopup pin={pin} onClose={() => setOpen(false)} />}

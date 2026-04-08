@@ -78,3 +78,42 @@
   font-size: 13px;
   color: var(--color-text-muted);
 }
+
+.pin-location-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pin-gps-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  padding: 5px 10px;
+  white-space: nowrap;
+}
+
+.pin-gps-btn-active {
+  border-color: var(--color-brand);
+  color: var(--color-brand-dark);
+  background: var(--color-brand-light);
+}
+
+.pin-gps-note {
+  font-size: 12px;
+  margin-top: 6px;
+  padding: 5px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.pin-gps-note-success {
+  color: var(--color-brand-dark);
+  background: var(--color-brand-light);
+}
+
+.pin-gps-note-error {
+  color: var(--color-error-text);
+  background: var(--color-error-bg);
+}

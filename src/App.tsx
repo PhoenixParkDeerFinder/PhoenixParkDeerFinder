@@ -1,21 +1,27 @@
-import MapView from "./components/map/MapView";
-import Navbar from "./components/layout/Navbar";
-import AnimalFilterBar from "./components/map/FilterBar";
-import "./App.css";
-import React from "react";
-import { CssBaseline } from "@mui/material";
+import { useState } from 'react'
+import MapView from './components/map/MapView'
+import Navbar from './components/layout/Navbar'
+import FilterBar from './components/map/FilterBar'
+import type { FilterState } from './components/map/FilterBar'
+import './App.css'
+
+const DEFAULT_FILTERS: FilterState = {
+  animalId: null,
+  verifiedOnly: false,
+  hasPhoto: false,
+  maxAgeHours: 12,
+}
 
 export default function App() {
+  const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS)
+
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <div className="app">
-        <Navbar />
-        <div className="map-wrapper">
-          <AnimalFilterBar />
-          <MapView />
-        </div>
+    <div className="app">
+      <Navbar />
+      <div className="map-wrapper">
+        <FilterBar filters={filters} onChange={setFilters} />
+        <MapView {...filters} />
       </div>
-    </React.Fragment>
-  );
+    </div>
+  )
 }

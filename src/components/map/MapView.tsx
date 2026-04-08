@@ -7,6 +7,7 @@ import type { LatLng } from "leaflet";
 import { Polygon } from "react-leaflet";
 import { usePark, usePins } from "../../hooks";
 import "./MapView.css"
+import type { FilterState } from "./FilterBar";
 
 function ClickHandler({
   onMapClick,
@@ -21,9 +22,9 @@ function ClickHandler({
   return null;
 }
 
-export default function MapView() {
+export default function MapView(filters: FilterState) {
   const { park, loading: parkLoading } = usePark();
-  const { pins, loading: pinsLoading } = usePins(park?.id ?? null);
+  const { pins, loading: pinsLoading } = usePins(park?.id ?? null, filters);
   const [pendingLatLng, setPendingLatLng] = useState<LatLng | null>(null);
 
   if (parkLoading) return <div className="map-loading">Loading map...</div>;
@@ -31,12 +32,25 @@ export default function MapView() {
 
   const center = postgisPointToLatLng(park.center_location);
 
+  const adjustedCoordinates: [number, number][] = []
+
+  if (park.bounds) {
+    for (let i = 0; i < park.bounds.coordinates[0].length; i++) {
+      const x = park.bounds.coordinates[0][i][1]
+      const y = park.bounds.coordinates[0][i][0]
+
+      adjustedCoordinates.push([x,y])
+    }
+  }
+
   return (
     <>
       <MapContainer
         center={center}
         zoom={park.default_zoom}
-        style={{ height: "100vh", width: "100%" }}
+        minZoom={park.default_zoom-1}
+        zoomControl={false}
+        className="map-view-map"
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -50,8 +64,8 @@ export default function MapView() {
 
         {park.bounds && (
           <Polygon
-            positions={park.bounds.coordinates}
-            pathOptions={{ color: "#1D9E75", fillOpacity: 0.3, weight: 2 }}
+            positions={adjustedCoordinates}
+            pathOptions={{ color: "#1D9E75"}}
           />
         )}
       </MapContainer>

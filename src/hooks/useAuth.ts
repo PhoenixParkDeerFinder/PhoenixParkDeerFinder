@@ -1,51 +1,37 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
+import { useEffect, useState } from 'react'
+import { supabase } from '../lib/supabaseClient'
+import type { User } from '@supabase/supabase-js'
 
-export function useAuth(): {
-  user: any;
-  signIn: any;
-  signOut: any;
-  loading: any;
-} {
-  const [user, setUser] = React.useState<any>(null);
-  const [loading, setLoading] = React.useState(true);
+export function useAuth() {
+  const [user, setUser] = useState<User | null>(null)
+  const [loading, setLoading] = useState(true)
 
-  React.useEffect(() => {
-    // Check if user is logged in on mount
-    const checkUser = async () => {
-      try {
-        // Replace with actual auth check (e.g., from Firebase, Supabase, etc.)
-        const storedUser = localStorage.getItem("user");
-        setUser(storedUser ? JSON.parse(storedUser) : null);
-      } finally {
-        setLoading(false);
-      }
-    };
-    checkUser();
-  }, []);
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null)
+      setLoading(false)
+    })
 
-  const signIn = async () => {
-    setLoading(true);
-    try {
-      // Replace with actual sign-in logic
-      const mockUser = { email: "user@example.com" };
-      localStorage.setItem("user", JSON.stringify(mockUser));
-      setUser(mockUser);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null)
+    })
 
-  const signOut = async () => {
-    setLoading(true);
-    try {
-      // Replace with actual sign-out logic
-      localStorage.removeItem("user");
-      setUser(null);
-    } finally {
-      setLoading(false);
-    }
-  };
+    return () => subscription.unsubscribe()
+  }, [])
 
-  return { user, signIn, signOut, loading };
+  async function signUp(email: string, password: string): Promise<string | null> {
+    const { error } = await supabase.auth.signUp({ email, password })
+    return error?.message ?? null
+  }
+
+  async function signIn(email: string, password: string): Promise<string | null> {
+    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    return error?.message ?? null
+  }
+
+  async function signOut() {
+    await supabase.auth.signOut()
+  }
+
+  return { user, loading, signUp, signIn, signOut }
 }
