@@ -48,5 +48,5 @@ export function useAuth() {
     await dbSignOut();
   }
 
-  return { user, loading, authSignUp, authSignIn, authSignOut };
+  return { user, loading, signUp: authSignUp, signIn: authSignIn, signOut: authSignOut };
 }
