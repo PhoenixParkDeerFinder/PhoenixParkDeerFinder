@@ -1,37 +1,52 @@
-import { useEffect, useState } from 'react'
-import { supabase } from '../lib/supabaseClient'
-import type { User } from '@supabase/supabase-js'
+import { useEffect, useState } from "react";
+import {
+  dbGetSession,
+  dbSignInWithPassword,
+  dbSignOut,
+  dbSignUp,
+  dbSubscribeToAuthStateChange,
+} from "../lib/databaseClient";
+import type { User } from "@supabase/supabase-js";
 
 export function useAuth() {
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null)
-      setLoading(false)
-    })
+    async function getData() {
+      dbGetSession().then(({ data: { session } }) => {
+        setUser(session?.user ?? null);
+        setLoading(false);
+      });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null)
-    })
+      const {
+        data: { subscription },
+      } = await dbSubscribeToAuthStateChange(setUser);
 
-    return () => subscription.unsubscribe()
-  }, [])
+      return () => subscription.unsubscribe();
+    }
+    getData()
+  }, []);
 
-  async function signUp(email: string, password: string): Promise<string | null> {
-    const { error } = await supabase.auth.signUp({ email, password })
-    return error?.message ?? null
+  async function authSignUp(
+    email: string,
+    password: string,
+  ): Promise<string | null> {
+    const { error } = await dbSignUp(email, password);
+    return error?.message ?? null;
   }
 
-  async function signIn(email: string, password: string): Promise<string | null> {
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
-    return error?.message ?? null
+  async function authSignIn(
+    email: string,
+    password: string,
+  ): Promise<string | null> {
+    const { error } = await dbSignInWithPassword(email, password);
+    return error?.message ?? null;
   }
 
-  async function signOut() {
-    await supabase.auth.signOut()
+  async function authSignOut() {
+    await dbSignOut();
   }
 
-  return { user, loading, signUp, signIn, signOut }
+  return { user, loading, authSignUp, authSignIn, authSignOut };
 }

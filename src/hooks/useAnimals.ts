@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../lib/supabaseClient";
+import { dbGetAnimals } from "../lib/databaseClient";
 import type { Animal } from "../types/animal.types";
 
 export function useAnimals() {
@@ -7,10 +7,7 @@ export function useAnimals() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase
-      .from("animals")
-      .select("*")
-      .order("common_name")
+    dbGetAnimals()
       .then(({ data, error }) => {
         if (!error && data) setAnimals(data);
         setLoading(false);

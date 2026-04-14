@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../lib/supabaseClient";
+import { dbGetPark } from "../lib/databaseClient";
 import type { Park } from "../types/park.types";
 
-export function usePark() {
+export function usePark(parkId: number = 2) {
   const [park, setPark] = useState<Park | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase
-      .from("parks")
-      .select("*")
-      .single() // assumes one park row
+    dbGetPark(parkId)
       .then(({ data, error }) => {
-        if (!error) setPark(data);
+        if (!error && data) setPark(data);
         setLoading(false);
       });
   }, []);

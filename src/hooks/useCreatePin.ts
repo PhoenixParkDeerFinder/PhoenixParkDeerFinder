@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { supabase } from "../lib/supabaseClient";
+import { dbGetSession, dbUploadPhoto, dbUploadPin } from "../lib/databaseClient";
 import type { LatLng } from "leaflet";
 
 const RATE_LIMIT = 5; // max pins per window
@@ -52,7 +52,7 @@ export function useCreatePin() {
     // Check session — authenticated users skip rate limiting
     const {
       data: { session },
-    } = await supabase.auth.getSession();
+    } = await dbGetSession();
     const isAuthenticated = !!session;
 
     if (!isAuthenticated && isRateLimited()) {
@@ -65,9 +65,7 @@ export function useCreatePin() {
     if (photoFile) {
       const ext = photoFile.name.split(".").pop();
       const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-      const { error: uploadError } = await supabase.storage
-        .from("public_assets")
-        .upload(`pin_photos/${filename}`, photoFile, { upsert: false });
+      const { error: uploadError } = await dbUploadPhoto(photoFile)
 
       if (uploadError) {
         setError("Photo upload failed.");
@@ -79,13 +77,7 @@ export function useCreatePin() {
     // Build PostGIS point — note lng, lat order
     const location = `POINT(${latlng.lng} ${latlng.lat})`;
 
-    const { error: insertError } = await supabase.from("pins").insert({
-      location,
-      animal_id: animalId,
-      park_id: parkId,
-      photo_name: photoPath,
-      is_verified: false,
-    });
+    const { error: insertError } = await dbUploadPin(location, animalId, parkId, photoPath)
 
     if (insertError) {
       setError(insertError.message);

@@ -24,7 +24,9 @@ function ClickHandler({
 }
 
 export default function MapView(filters: FilterState) {
-  const { park, loading: parkLoading } = usePark();
+  const parkId = 2 //TODO: Implement props
+
+  const { park, loading: parkLoading } = usePark(parkId);
   const { pins, loading: pinsLoading } = usePins(park?.id ?? null, filters);
   const [pendingLatLng, setPendingLatLng] = useState<LatLng | null>(null);
 

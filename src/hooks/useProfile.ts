@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { supabase } from '../lib/supabaseClient'
+import { dbGetUserProfile, dbUpdateUsername } from '../lib/databaseClient'
 import type { Profile } from '../types/profile.types'
 
 const USERNAME_REGEX = /^[a-zA-Z0-9_]{3,20}$/
@@ -9,11 +9,7 @@ export function useProfile(userId: string | null) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', userId)
-      .single()
+    dbGetUserProfile(userId)
       .then(({ data }) => {
         setProfile(data)
         setLoading(false)
@@ -26,10 +22,7 @@ export function useProfile(userId: string | null) {
       return 'Username must be 3–20 characters and contain only letters, numbers, or underscores.'
     }
 
-    const { error } = await supabase
-      .from('profiles')
-      .update({ username, updated_at: new Date().toISOString() })
-      .eq('id', userId)
+    const { error } = await dbUpdateUsername(username, userId)
 
     if (error) {
       if (error.code === '23505') return 'That username is already taken.'
