@@ -1,8 +1,8 @@
 import L from "leaflet";
 import iconUrl from "leaflet/dist/images/marker-icon.png";
 import iconShadowUrl from "leaflet/dist/images/marker-shadow.png";
-import type { GeoJSONPoint, GeoJSONPolygon } from "../types";
 import { supabase } from "./supabaseClient";
+import type { GeoJSONPoint, GeoJSONPolygon } from "../types/geo.types";
 
 L.Icon.Default.mergeOptions({
   iconUrl,

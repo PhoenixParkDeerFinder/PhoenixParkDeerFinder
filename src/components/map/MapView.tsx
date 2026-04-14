@@ -5,9 +5,10 @@ import SightingMarker from "./SightingMarker";
 import CreatePinModal from "../sightings/CreatePinModal";
 import type { LatLng } from "leaflet";
 import { Polygon } from "react-leaflet";
-import { usePark, usePins } from "../../hooks";
 import "./MapView.css"
 import type { FilterState } from "./FilterBar";
+import { usePark } from "../../hooks/usePark";
+import { usePins } from "../../hooks/usePins";
 
 function ClickHandler({
   onMapClick,

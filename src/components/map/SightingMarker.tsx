@@ -2,7 +2,7 @@ import { Marker } from "react-leaflet";
 import L from "leaflet";
 import { useState } from "react";
 import SightingPopup from "./SightingPopup";
-import type { PinWithAnimal } from "../../types";
+import type { PinWithAnimal } from "../../types/pin.types";
 
 function makeIcon(iconUrl: string | null, isVerified: boolean, animalId: number) {
   return L.divIcon({

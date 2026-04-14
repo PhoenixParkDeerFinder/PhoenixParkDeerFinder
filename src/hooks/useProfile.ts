@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabaseClient'
-import type { Profile } from '../types'
+import type { Profile } from '../types/profile.types'
 
 const USERNAME_REGEX = /^[a-zA-Z0-9_]{3,20}$/
 

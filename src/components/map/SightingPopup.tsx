@@ -1,7 +1,7 @@
 import { Popup } from 'react-leaflet'
 import { getPhotoUrl } from '../../lib/mapConfig'
-import type { PinWithAnimal } from '../../types'
 import "./SightingPopup.css"
+import type { PinWithAnimal } from '../../types/pin.types'
 
 interface Props {
   pin: PinWithAnimal

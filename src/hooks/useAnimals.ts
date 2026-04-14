@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabaseClient";
-import type { Animal } from "../types";
+import type { Animal } from "../types/animal.types";
 
 export function useAnimals() {
   const [animals, setAnimals] = useState<Animal[]>([]);

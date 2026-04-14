@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabaseClient";
-import type { PinWithAnimal } from "../types";
 import type { FilterState } from "../components/map/FilterBar";
+import type { PinWithAnimal } from "../types/pin.types";
 
 export function usePins(parkId: number | null, filters: FilterState) {
   const [pins, setPins] = useState<PinWithAnimal[]>([]);

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabaseClient";
-import type { Park } from "../types";
+import type { Park } from "../types/park.types";
 
 export function usePark() {
   const [park, setPark] = useState<Park | null>(null);
