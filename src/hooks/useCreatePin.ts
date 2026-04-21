@@ -65,7 +65,7 @@ export function useCreatePin() {
     if (photoFile) {
       const ext = photoFile.name.split(".").pop();
       const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-      const { error: uploadError } = await dbUploadPhoto(photoFile)
+      const { error: uploadError } = await dbUploadPhoto(filename, photoFile)
 
       if (uploadError) {
         setError("Photo upload failed.");

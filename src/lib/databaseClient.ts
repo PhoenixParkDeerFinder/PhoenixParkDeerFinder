@@ -3,7 +3,7 @@ import type { FilterState } from "../components/map/FilterBar";
 import type { PinWithAnimal } from "../types/pin.types";
 import type { Dispatch, SetStateAction } from "react";
 
-const database = createClient(
+export const database = createClient(
   import.meta.env.VITE_SUPABASE_URL,
   import.meta.env.VITE_SUPABASE_ANON_KEY,
 );
@@ -148,9 +148,7 @@ export async function dbSignOut() {
   return database.auth.signOut();
 }
 
-export async function dbUploadPhoto(photoFile: File) {
-  const ext = photoFile.name.split(".").pop();
-  const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+export async function dbUploadPhoto(filename: string, photoFile: File) {
   return database.storage
     .from("public_assets")
     .upload(`pin_photos/${filename}`, photoFile, { upsert: false });
@@ -195,4 +193,12 @@ export async function dbGetPinsPerAnimal(parkId: number, animalId: number | null
   if (animalId !== null) query = query.eq('animal_id', animalId)
 
   return query
+}
+
+export async function dbGetUserRole(id: string) {
+  return database
+      .from('profiles')
+      .select('role')
+      .eq('id', id)
+      .single()
 }

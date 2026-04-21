@@ -1,14 +1,16 @@
 import { useRef, useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import "./AuthDropdown.css";
+import { useIsAdmin } from "../../hooks/useIsAdmin";
 
 type Panel = "signin" | "signup";
 
 interface Props {
   onOpenAccount: () => void;
+  onOpenAdmin: () => void;
 }
 
-export default function AuthDropdown({ onOpenAccount }: Props) {
+export default function AuthDropdown({ onOpenAccount, onOpenAdmin }: Props) {
   const { user, loading, signIn, signUp, signOut } = useAuth();
   const [open, setOpen] = useState(false);
   const [panel, setPanel] = useState<Panel>("signin");
@@ -18,6 +20,7 @@ export default function AuthDropdown({ onOpenAccount }: Props) {
   const [submitting, setSubmitting] = useState(false);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const ref = useRef<HTMLDivElement>(null);
+  const { isAdmin } = useIsAdmin();
 
   // Close on outside click
   useEffect(() => {
@@ -181,6 +184,38 @@ export default function AuthDropdown({ onOpenAccount }: Props) {
                 </svg>
                 Account settings
               </button>
+
+              {isAdmin && (
+                <>
+                  <div className="auth-divider" />
+                  <button
+                    className="auth-menu-item"
+                    onClick={() => {
+                      onOpenAdmin();
+                      setOpen(false);
+                    }}
+                  >
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+                      <rect
+                        x="1"
+                        y="4"
+                        width="13"
+                        height="9"
+                        rx="1.5"
+                        stroke="currentColor"
+                        strokeWidth="1.2"
+                      />
+                      <path
+                        d="M5 4V3a2 2 0 0 1 4 0v1"
+                        stroke="currentColor"
+                        strokeWidth="1.2"
+                      />
+                      <circle cx="7.5" cy="8.5" r="1.5" fill="currentColor" />
+                    </svg>
+                    Admin panel
+                  </button>
+                </>
+              )}
 
               <div className="auth-divider" />
 

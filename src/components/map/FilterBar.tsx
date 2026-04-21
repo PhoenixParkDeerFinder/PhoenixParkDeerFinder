@@ -33,6 +33,7 @@ function formatAge(hours: number): string {
   const h = hours % 24;
   return h > 0 ? `${d}d ${h}h` : `${d}d`;
 }
+//TODO: Move to separate class
 
 export default function FilterBar({ filters, onChange }: Props) {
   const { animals, loading } = useAnimals();
@@ -172,9 +173,7 @@ export default function FilterBar({ filters, onChange }: Props) {
                 Max pin age
               </label>
               <span className="filter-age-value">
-                {filters.maxAgeHours === MAX_AGE_MAX
-                  ? "Any"
-                  : `≤ ${formatAge(filters.maxAgeHours)}`}
+                {formatAge(filters.maxAgeHours)}
               </span>
             </div>
             <input
