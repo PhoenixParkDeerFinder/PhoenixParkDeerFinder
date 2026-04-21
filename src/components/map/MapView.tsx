@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
+import { MapContainer, Polygon, TileLayer, useMapEvents } from "react-leaflet";
 import { postgisPointToLatLng } from "../../lib/mapConfig";
 import SightingMarker from "./SightingMarker";
 import CreatePinModal from "../sightings/CreatePinModal";
@@ -83,6 +83,13 @@ export default function MapView({ filters }: Props) {
 
         {mapView === "predicted" && !predictedLoading && (
           <HeatmapLayer pins={predictedPins} mode="predicted" />
+        )}
+
+        {park.bounds && (
+          <Polygon
+            positions={adjustedCoordinates}
+            pathOptions={{ color: "#1D9E75"}}
+          />
         )}
       </MapContainer>
 
