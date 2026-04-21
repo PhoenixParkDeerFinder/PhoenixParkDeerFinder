@@ -3,3 +3,27 @@
     width: 100%;
     z-index: 0;
 }
+
+.predicted-banner {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 400;
+  background: rgba(27, 94, 32, 0.88);
+  color: #c8e6c9;
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  pointer-events: none;
+  max-width: calc(100vw - 32px);
+  text-align: center;
+  white-space: normal;
+}
+
+@media (max-width: 480px) {
+  .predicted-banner {
+    bottom: 90px;
+  }
+}

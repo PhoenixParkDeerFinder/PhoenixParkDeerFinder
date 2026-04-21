@@ -12,7 +12,7 @@ export function usePark(parkId: number = 2) {
         if (!error && data) setPark(data);
         setLoading(false);
       });
-  }, []);
+  }, [parkId]);
 
   return { park, loading };
 }

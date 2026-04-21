@@ -185,3 +185,14 @@ export async function dbUpdateUsername(username: string, userId: string) {
     .update({ username, updated_at: new Date().toISOString() })
     .eq("id", userId);
 }
+
+export async function dbGetPinsPerAnimal(parkId: number, animalId: number | null) {
+  let query = database
+    .from('pins')
+    .select('*, animals(common_name, species, icon_url)')
+    .eq('park_id', parkId)
+
+  if (animalId !== null) query = query.eq('animal_id', animalId)
+
+  return query
+}

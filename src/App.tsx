@@ -22,7 +22,7 @@ export default function App() {
       <Navbar onOpenAccount={() => setAccountOpen(true)}/>
       <div className="map-wrapper">
         <FilterBar filters={filters} onChange={setFilters} />
-        <MapView {...filters} />
+        <MapView filters={filters} />
       </div>
       {accountOpen && <AccountPage onClose={() => setAccountOpen(false)} />}
     </div>
