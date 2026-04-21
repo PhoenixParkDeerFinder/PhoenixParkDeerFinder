@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useEffectEvent } from 'react'
 import type { PinWithAnimal } from '../types/pin.types'
 import { database } from '../lib/databaseClient' //TODO: Temporary
 
@@ -105,10 +105,15 @@ export function useAdminPins(parkId: number | null, filters: AdminPinFilters) {
     setLoading(false)
   }, [parkId, filters])
 
-  useEffect(() => {
+  const onMount = useEffectEvent(() => {
     setPage(0)
     fetch(0)
-  }, [filters, parkId])
+  })
+
+  useEffect(() => {
+    onMount()
+  }, [fetch, filters, parkId])
+
 
   function nextPage() {
     const next = page + 1
